@@ -15,25 +15,22 @@ class ExpectingArgumentsTest(unittest.TestCase):
 
     def setUp(self):  # noqa
         self.intercom = intercom.Intercom
-        self.intercom.app_id = 'abc123'
-        self.intercom.app_api_key = 'super-secret-key'
+        self.intercom.personal_access_token = 'super-personal-access-token'
 
     @istest
-    def it_raises_argumenterror_if_no_app_id_or_app_api_key_specified(self):  # noqa
-        self.intercom.app_id = None
-        self.intercom.app_api_key = None
+    def it_raises_argumenterror_if_no_personal_access_token_specified(self):  # noqa
+        self.intercom.personal_access_token = None
         with assert_raises(intercom.ArgumentError):
             self.intercom.target_base_url
 
     @istest
-    def it_returns_the_app_id_and_app_api_key_previously_set(self):
-        eq_(self.intercom.app_id, 'abc123')
-        eq_(self.intercom.app_api_key, 'super-secret-key')
+    def it_returns_the_personal_access_token_previously_set(self):
+        eq_(self.intercom.personal_access_token, 'super-personal-access-token')
 
     @istest
     def it_defaults_to_https_to_api_intercom_io(self):
         eq_(self.intercom.target_base_url,
-            'https://abc123:super-secret-key@api.intercom.io')
+            'https://super-personal-access-token:@api.intercom.io')
 
 
 class OverridingProtocolHostnameTest(unittest.TestCase):
@@ -54,20 +51,20 @@ class OverridingProtocolHostnameTest(unittest.TestCase):
         self.intercom.hostname = "localhost:3000"
         eq_(
             self.intercom.target_base_url,
-            "http://abc123:super-secret-key@localhost:3000")
+            "http://super-personal-access-token:@localhost:3000")
 
     @istest
     def it_prefers_endpoints(self):
         self.intercom.endpoint = "https://localhost:7654"
         eq_(self.intercom.target_base_url,
-            "https://abc123:super-secret-key@localhost:7654")
+            "https://super-personal-access-token:@localhost:7654")
 
         # turn off the shuffle
         with mock.patch("random.shuffle") as mock_shuffle:
             mock_shuffle.return_value = ["http://example.com", "https://localhost:7654"]  # noqa
             self.intercom.endpoints = ["http://example.com", "https://localhost:7654"]  # noqa
             eq_(self.intercom.target_base_url,
-                'http://abc123:super-secret-key@example.com')
+                'http://super-personal-access-token:@example.com')
 
     @istest
     def it_has_endpoints(self):

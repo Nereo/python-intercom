@@ -7,8 +7,7 @@ from datetime import datetime
 from intercom import Intercom
 from intercom import Segment
 
-Intercom.app_id = os.environ.get('INTERCOM_APP_ID')
-Intercom.app_api_key = os.environ.get('INTERCOM_APP_API_KEY')
+Intercom.personal_access_token = os.environ.get('INTERCOM_PERSONAL_ACCESS_TOKEN')
 
 
 class SegmentTest(unittest.TestCase):

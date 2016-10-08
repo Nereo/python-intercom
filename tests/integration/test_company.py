@@ -10,8 +10,7 @@ from . import get_or_create_user
 from . import get_or_create_company
 from . import get_timestamp
 
-Intercom.app_id = os.environ.get('INTERCOM_APP_ID')
-Intercom.app_api_key = os.environ.get('INTERCOM_APP_API_KEY')
+Intercom.personal_access_token = os.environ.get('INTERCOM_PERSONAL_ACCESS_TOKEN')
 
 
 class CompanyTest(unittest.TestCase):
